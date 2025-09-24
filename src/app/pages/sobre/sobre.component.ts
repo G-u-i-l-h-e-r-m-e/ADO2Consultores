@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-sobre',
-  imports: [],
-  templateUrl: './sobre.component.html',
-  styleUrl: './sobre.component.scss'
+  standalone: true,
+  template: `
+    <h2>Sobre</h2>
+    <p>Aplicação Angular para gerenciamento de consultores.</p>
+  `
 })
-export class SobreComponent {
-
-}
+export class SobreComponent {}

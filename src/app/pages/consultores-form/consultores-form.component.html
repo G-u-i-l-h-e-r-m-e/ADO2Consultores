@@ -1,1 +1,41 @@
-<p>consultores-form works!</p>
+<div class="container mt-4">
+  <div class="card mx-auto" style="max-width: 500px;">
+    <div class="card-body">
+      <h3 class="card-title mb-4">
+        {{ editando ? 'Editar Consultor' : 'Novo Consultor' }}
+      </h3>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome</label>
+          <input id="nome" type="text" class="form-control" formControlName="nome" [disabled]="salvando" />
+          <div *ngIf="form.get('nome')?.invalid && form.get('nome')?.touched" class="text-danger">
+            Nome é obrigatório
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input id="email" type="email" class="form-control" formControlName="email" [disabled]="salvando" />
+          <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="text-danger">
+            Email inválido
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="telefone" class="form-label">Telefone</label>
+          <input id="telefone" type="text" class="form-control" formControlName="telefone" [disabled]="salvando" />
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <button type="submit" class="btn btn-primary" [disabled]="form.invalid || salvando">
+            {{ salvando ? 'Salvando...' : (editando ? 'Salvar' : 'Adicionar') }}
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="cancelar()" [disabled]="salvando">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

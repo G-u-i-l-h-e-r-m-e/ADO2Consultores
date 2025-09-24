@@ -1,1 +1,62 @@
-<p>login works!</p>
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h2>Sistema de Consultores</h2>
+      <p>Faça login para continuar</p>
+    </div>
+
+    <div class="error-message" *ngIf="erroLogin">
+      <i class="error-icon">⚠️</i>
+      Email ou senha inválidos.
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          placeholder="Digite seu email"
+          class="form-control"
+        />
+        <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="text-danger">
+          Email inválido ou obrigatório.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input
+          type="password"
+          id="senha"
+          formControlName="senha"
+          placeholder="Digite sua senha"
+          class="form-control"
+        />
+        <div *ngIf="form.get('senha')?.invalid && form.get('senha')?.touched" class="text-danger">
+          Senha é obrigatória.
+        </div>
+      </div>
+
+      <div class="loading-spinner" *ngIf="isLoading">
+        <div class="spinner"></div>
+        <span>Fazendo login...</span>
+      </div>
+
+      <button
+        type="submit"
+        class="login-button"
+        [disabled]="form.invalid || isLoading"
+      >
+        {{ isLoading ? 'Entrando...' : 'Entrar' }}
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <h5>Usuários para teste:</h5>
+      <p><strong>Admin:</strong> admin&#64;empresa.com / admin123</p>
+      <p><strong>User:</strong> user&#64;empresa.com / user123</p>
+    </div>
+  </div>
+</div>

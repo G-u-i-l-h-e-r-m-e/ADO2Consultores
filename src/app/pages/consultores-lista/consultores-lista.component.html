@@ -1,1 +1,26 @@
-<p>consultores-lista works!</p>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Lista de Consultores</h2>
+  <button *ngIf="isAdmin" class="btn btn-success" (click)="adicionar()">Novo Consultor</button>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Telefone</th>
+      <th *ngIf="isAdmin">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let c of consultores">
+      <td>{{ c.nome }}</td>
+      <td>{{ c.email }}</td>
+      <td>{{ c.telefone }}</td>
+      <td *ngIf="isAdmin">
+        <button class="btn btn-sm btn-primary me-2" (click)="editar(c.id)">Editar</button>
+        <button class="btn btn-sm btn-danger" (click)="excluir(c.id)">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
