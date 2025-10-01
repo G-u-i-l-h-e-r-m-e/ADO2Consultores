@@ -3,14 +3,33 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
+/* Angular Material */
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { ConsultoresService } from '../../services/consultores.service';
 import { Consultor } from '../../models/consultor';
 
 @Component({
   selector: 'app-consultores-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './consultores-form.component.html'
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    // Material
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+  ],
+  templateUrl: './consultores-form.component.html',
+  styleUrls: ['./consultores-form.component.scss'], // veja o SCSS abaixo
 })
 export class ConsultoresFormComponent implements OnInit {
   form!: FormGroup;
@@ -29,7 +48,7 @@ export class ConsultoresFormComponent implements OnInit {
     this.form = this.fb.group({
       nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      telefone: ['']
+      telefone: [''],
     });
 
     this.route.paramMap.subscribe(params => {
@@ -67,10 +86,7 @@ export class ConsultoresFormComponent implements OnInit {
     operacao.subscribe({
       next: () => {
         this.salvando = false;
-        // Pequeno delay para garantir que a lista seja atualizada
-        setTimeout(() => {
-          this.router.navigate(['/consultores']);
-        }, 100);
+        setTimeout(() => this.router.navigate(['/consultores']), 100);
       },
       error: () => {
         this.salvando = false;

@@ -6,10 +6,21 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ConsultoresService {
-  private consultores: Consultor[] = [
-    { id: 1, nome: 'João Silva', email: 'joao@exemplo.com', telefone: '123456789' },
-    { id: 2, nome: 'Maria Oliveira', email: 'maria@exemplo.com', telefone: '987654321' }
-  ];
+ private consultores: Consultor[] = [
+  { id: 1, nome: 'André Santos', email: 'andre.santos@exemplo.com', telefone: '11955554444' },
+  { id: 2, nome: 'Beatriz Nunes', email: 'beatriz.nunes@exemplo.com', telefone: '21944445555' },
+  { id: 3, nome: 'Carlos Pereira', email: 'carlos.pereira@exemplo.com', telefone: '11987654321' },
+  { id: 4, nome: 'Ana Souza', email: 'ana.souza@exemplo.com', telefone: '21912345678' },
+  { id: 5, nome: 'Ricardo Lima', email: 'ricardo.lima@exemplo.com', telefone: '31987654321' },
+  { id: 6, nome: 'Fernanda Costa', email: 'fernanda.costa@exemplo.com', telefone: '41912345678' },
+  { id: 7, nome: 'Gabriel Almeida', email: 'gabriel.almeida@exemplo.com', telefone: '51987654321' },
+  { id: 8, nome: 'Juliana Martins', email: 'juliana.martins@exemplo.com', telefone: '61912345678' },
+  { id: 9, nome: 'Rodrigo Ferreira', email: 'rodrigo.ferreira@exemplo.com', telefone: '71987654321' },
+  { id: 10, nome: 'Patrícia Gomes', email: 'patricia.gomes@exemplo.com', telefone: '81912345678' },
+  { id: 11, nome: 'Lucas Mendes', email: 'lucas.mendes@exemplo.com', telefone: '91987654321' },
+  { id: 12, nome: 'Camila Rocha', email: 'camila.rocha@exemplo.com', telefone: '11912349876' }
+];
+
 
   private consultoresSubject = new BehaviorSubject<Consultor[]>(this.consultores);
   public consultores$ = this.consultoresSubject.asObservable();

@@ -1,26 +1,70 @@
-<div class="d-flex justify-content-between align-items-center mb-3">
+<div class="header">
   <h2>Lista de Consultores</h2>
-  <button *ngIf="isAdmin" class="btn btn-success" (click)="adicionar()">Novo Consultor</button>
+
+  <div class="header-actions">
+    <mat-form-field appearance="outline" class="filter">
+      <mat-label>Buscar</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Nome, email ou telefone" />
+      <button mat-icon-button matSuffix aria-label="limpar filtro" *ngIf="dataSource.filter"
+              (click)="clearFilter()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button *ngIf="isAdmin" mat-raised-button color="primary" (click)="adicionar()">
+      <mat-icon>add</mat-icon>
+      Novo Consultor
+    </button>
+  </div>
 </div>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Nome</th>
-      <th>Email</th>
-      <th>Telefone</th>
-      <th *ngIf="isAdmin">Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let c of consultores">
-      <td>{{ c.nome }}</td>
-      <td>{{ c.email }}</td>
-      <td>{{ c.telefone }}</td>
-      <td *ngIf="isAdmin">
-        <button class="btn btn-sm btn-primary me-2" (click)="editar(c.id)">Editar</button>
-        <button class="btn btn-sm btn-danger" (click)="excluir(c.id)">Excluir</button>
+<div class="table-wrapper mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort matSortDisableClear>
+
+    <!-- Nome -->
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+      <td mat-cell *matCellDef="let c">{{ c.nome }}</td>
+    </ng-container>
+
+    <!-- Email -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+      <td mat-cell *matCellDef="let c">{{ c.email }}</td>
+    </ng-container>
+
+    <!-- Telefone -->
+    <ng-container matColumnDef="telefone">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Telefone</th>
+      <td mat-cell *matCellDef="let c">{{ c.telefone }}</td>
+    </ng-container>
+
+    <!-- Ações (somente admin) -->
+    <ng-container matColumnDef="acoes" *ngIf="isAdmin">
+      <th mat-header-cell *matHeaderCellDef class="col-acoes">Ações</th>
+      <td mat-cell *matCellDef="let c" class="col-acoes">
+        <button mat-stroked-button color="primary" (click)="editar(c.id)" matTooltip="Editar">
+          <mat-icon>edit</mat-icon>
+          Editar
+        </button>
+        <button mat-stroked-button color="warn" (click)="confirmarExclusao(c)" matTooltip="Excluir">
+          <mat-icon>delete</mat-icon>
+          Excluir
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <!-- Estado vazio -->
+    <tr class="empty" *ngIf="dataSource.data.length === 0">
+      <td [attr.colspan]="displayedColumns.length">
+        Nenhum consultor encontrado.
       </td>
     </tr>
-  </tbody>
-</table>
+  </table>
+
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5,10,25]" showFirstLastButtons>
+  </mat-paginator>
+</div>

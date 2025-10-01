@@ -1,0 +1,25 @@
+// /* src/styles/theme.scss */
+// @use '@angular/material' as mat;
+
+// /* 1) Habilita core */
+// @include mat.core();
+
+// /* 2) Define tema usando a API nova (Material 3) */
+// $my-theme: mat.define-theme((
+//   color: (
+//     theme-type: light,
+//     // Paletas disponíveis no M3 (ex.: $azure-palette, $rose-palette, $magenta-palette, $cyan-palette)
+//     primary:  mat.$azure-palette,
+//     tertiary: mat.$magenta-palette,
+//   ),
+//   typography: (
+//     brand-family: 'Roboto, Arial, sans-serif',
+//     bold-weight: 700
+//   ),
+//   density: 0
+// ));
+
+// /* 3) Aplica tema globalmente */
+// :root {
+//   @include mat.all-component-themes($my-theme);
+// }

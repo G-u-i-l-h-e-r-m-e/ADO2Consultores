@@ -1,0 +1,42 @@
+.header {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+
+  .header-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+
+    .filter {
+      width: min(360px, 100%);
+    }
+  }
+}
+
+.table-wrapper {
+  overflow: auto;
+  border-radius: 12px;
+}
+
+.col-acoes {
+  width: 240px;
+  white-space: nowrap;
+
+  button {
+    margin-right: 8px;
+  }
+}
+
+table {
+  width: 100%;
+}
+
+tr.empty td {
+  text-align: center;
+  padding: 24px;
+  opacity: 0.75;
+}
