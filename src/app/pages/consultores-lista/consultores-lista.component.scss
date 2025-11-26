@@ -1,42 +1,152 @@
-.header {
+/* ============================
+   CONTAINER / LAYOUT
+============================ */
+.page-header {
   display: flex;
-  gap: 16px;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
-
-  .header-actions {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-
-    .filter {
-      width: min(360px, 100%);
-    }
-  }
+  align-items: flex-end;
+  padding: 20px 0 10px;
+  border-bottom: 2px solid #e7e9ee;
 }
 
-.table-wrapper {
-  overflow: auto;
-  border-radius: 12px;
+.title-section h2 {
+  font-size: 1.9rem;
+  font-weight: 600;
+  margin: 0;
+  color: #1f2937;
 }
 
-.col-acoes {
-  width: 240px;
-  white-space: nowrap;
-
-  button {
-    margin-right: 8px;
-  }
+.subtitle {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin-top: 3px;
 }
 
+/* ============================
+   AÇÕES DO TOPO
+============================ */
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.filter-field {
+  width: 260px;
+}
+
+.btn-add {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  text-transform: none;
+}
+
+/* ============================
+   CARD DA TABELA
+============================ */
+.table-card {
+  background: #ffffff;
+  padding: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.06);
+  margin-top: 20px;
+}
+
+/* ============================
+   TABELA
+============================ */
 table {
   width: 100%;
+  border-spacing: 0 !important;
 }
 
-tr.empty td {
+th.mat-header-cell {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #374151;
+  background: #f9fafb;
+  padding: 14px !important;
+  text-transform: uppercase;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+td.mat-cell {
+  padding: 14px !important;
+  font-size: 0.9rem;
+  color: #374151;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+tr.mat-row:hover td {
+  background: #f9fbff;
+}
+
+/* ============================
+   TAG DE ÁREA
+============================ */
+.badge-area {
+  background: #e0f2fe;
+  color: #0284c7;
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+/* ============================
+   AÇÕES (EDITAR / DELETAR)
+============================ */
+.col-acoes {
+  width: 120px;
   text-align: center;
-  padding: 24px;
-  opacity: 0.75;
+}
+
+.action-btn {
+  margin: 0 4px;
+  transition: 0.2s ease-in-out;
+}
+
+.action-btn:hover {
+  transform: scale(1.15);
+}
+
+/* ============================
+   LINHA VAZIA
+============================ */
+.empty-row td {
+  text-align: center;
+  padding: 40px;
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+/* ============================
+   PAGINAÇÃO
+============================ */
+mat-paginator {
+  border-top: 1px solid #e5e7eb;
+}
+
+/* ============================
+   MOBILE
+============================ */
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .filter-field {
+    flex: 1;
+    width: 100%;
+  }
 }

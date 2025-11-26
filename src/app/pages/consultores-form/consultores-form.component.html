@@ -34,6 +34,20 @@
           <mat-hint>Opcional</mat-hint>
         </mat-form-field>
 
+        <mat-form-field appearance="outline">
+          <mat-label>Área de especialização</mat-label>
+          <input matInput formControlName="areaEspecializacao" required />
+          <mat-error *ngIf="form.controls['areaEspecializacao'].invalid">
+            Campo obrigatório
+          </mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Data de cadastro</mat-label>
+          <input matInput [value]="form.value.dataCadastro | date:'dd/MM/yyyy'" disabled />
+        </mat-form-field>
+        
+
         <div class="actions">
           <button
             mat-raised-button

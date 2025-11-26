@@ -22,7 +22,6 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   imports: [
     CommonModule,
-    // Material
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -39,8 +38,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class ConsultoresListaComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<Consultor>([]);
-  displayedColumns: string[] = ['nome', 'email', 'telefone'];
-  isAdmin = false;
+  displayedColumns = ['nome', 'email', 'telefone', 'areaEspecializacao', 'dataCadastro', 'acoes'];
 
   private subscription!: Subscription;
 
@@ -56,19 +54,15 @@ export class ConsultoresListaComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.isAdmin = this.authService.temPerfil('admin');
-    if (this.isAdmin) {
-      this.displayedColumns = [...this.displayedColumns, 'acoes'];
-    }
     this.loadConsultores();
 
     // Filtro em múltiplas colunas
     this.dataSource.filterPredicate = (data, filter) => {
       const f = filter.trim().toLowerCase();
       return (
-        (data.nome || '').toLowerCase().includes(f) ||
-        (data.email || '').toLowerCase().includes(f) ||
-        (data.telefone || '').toLowerCase().includes(f)
+        data.nome.toLowerCase().includes(f) ||
+        data.email.toLowerCase().includes(f) ||
+        data.telefone.toLowerCase().includes(f)
       );
     };
   }
@@ -80,9 +74,12 @@ export class ConsultoresListaComponent implements OnInit, OnDestroy {
   loadConsultores() {
     this.subscription = this.consultoresService.listar().subscribe((data) => {
       this.dataSource.data = data || [];
-      // Conecta paginator/sort quando os ViewChilds já existem
-      if (this.paginator) this.dataSource.paginator = this.paginator;
-      if (this.sort) this.dataSource.sort = this.sort;
+
+      // Aplica paginator e sort assim que eles existirem
+      setTimeout(() => {
+        if (this.paginator) this.dataSource.paginator = this.paginator;
+        if (this.sort) this.dataSource.sort = this.sort;
+      });
     });
   }
 
@@ -113,15 +110,16 @@ export class ConsultoresListaComponent implements OnInit, OnDestroy {
     });
 
     ref.afterClosed().subscribe((ok) => {
-      if (ok) {
-        this.excluir(c.id);
-      }
+      if (ok) this.excluir(c.id);
     });
   }
 
   excluir(id: number) {
     this.consultoresService.excluir(id).subscribe({
-      next: () => this.snack.open('Consultor excluído.', 'Fechar', { duration: 2500 }),
+      next: () => {
+        this.snack.open('Consultor excluído.', 'Fechar', { duration: 2500 });
+        this.loadConsultores();
+      },
       error: () => this.snack.open('Erro ao excluir.', 'Fechar', { duration: 3000 }),
     });
   }
@@ -131,7 +129,7 @@ export class ConsultoresListaComponent implements OnInit, OnDestroy {
   }
 }
 
-/** Dialog de confirmação (standalone) */
+/** Dialog de confirmação */
 @Component({
   selector: 'app-confirm-dialog',
   standalone: true,
@@ -152,7 +150,8 @@ export class ConsultoresListaComponent implements OnInit, OnDestroy {
 })
 export class ConfirmDialogComponent {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { titulo: string; mensagem: string; confirmarTexto?: string; cancelarTexto?: string },
+    @Inject(MAT_DIALOG_DATA) public data: any,
     public ref: MatDialogRef<ConfirmDialogComponent>
   ) {}
 }
+

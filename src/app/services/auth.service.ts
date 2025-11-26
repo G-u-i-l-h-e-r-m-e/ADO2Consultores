@@ -1,44 +1,26 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { Usuario } from '../models/usuario';
+import { Auth, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
+import { User } from 'firebase/auth';
+import { from } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  private usuarios: Usuario[] = [
-    { email: 'admin@empresa.com', senha: 'admin123', perfil: 'admin' },
-    { email: 'user@empresa.com', senha: 'user123', perfil: 'user' }
-  ];
 
-  private usuarioLogadoSubject = new BehaviorSubject<Usuario | null>(null);
-  usuarioLogado$: Observable<Usuario | null> = this.usuarioLogadoSubject.asObservable();
+  constructor(private auth: Auth) {}
 
-  login(email: string, senha: string): Observable<boolean> {
-    const user = this.usuarios.find(u => u.email === email && u.senha === senha);
-    if (user) {
-      this.usuarioLogadoSubject.next(user);
-      return of(true);
-    }
-    return of(false);
+  login(email: string, senha: string) {
+    return from(signInWithEmailAndPassword(this.auth, email, senha));
   }
 
   logout() {
-    this.usuarioLogadoSubject.next(null);
+    return from(signOut(this.auth));
   }
 
-  getUsuario(): Usuario | null {
-    return this.usuarioLogadoSubject.value;
+  get usuarioAtual(): User | null {
+    return this.auth.currentUser;
   }
 
   isLoggedIn(): boolean {
-    return this.usuarioLogadoSubject.value !== null;
-  }
-
-  temPerfil(perfil: 'admin' | 'user'): boolean {
-    const user = this.usuarioLogadoSubject.value;
-    if (!user) return false;
-    if (perfil === 'user') return true; // user pode ver
-    return user.perfil === perfil;
+    return this.usuarioAtual !== null;
   }
 }

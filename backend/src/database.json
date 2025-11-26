@@ -1,0 +1,20 @@
+{
+  "consultores": [
+    {
+      "id": 1764116172852,
+      "nome": "Guilherme",
+      "email": "gui@teste.com",
+      "telefone": "1112345678",
+      "areaEspecializacao": "teste",
+      "dataCadastro": "2025-11-26T00:16:00.220Z"
+    },
+    {
+      "id": 1764116285025,
+      "nome": "Rodrigo",
+      "email": "rod@gmail.com",
+      "telefone": "11912345678",
+      "areaEspecializacao": "teste ",
+      "dataCadastro": "2025-11-26T00:17:48.774Z"
+    }
+  ]
+}

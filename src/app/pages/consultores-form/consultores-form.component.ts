@@ -48,8 +48,11 @@ export class ConsultoresFormComponent implements OnInit {
     this.form = this.fb.group({
       nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      telefone: [''],
+      telefone: ['', Validators.required],
+      areaEspecializacao: ['', Validators.required],
+      dataCadastro: [{ value: new Date().toISOString(), disabled: true }],
     });
+    
 
     this.route.paramMap.subscribe(params => {
       const idParam = params.get('id');
@@ -71,29 +74,29 @@ export class ConsultoresFormComponent implements OnInit {
 
   onSubmit() {
     if (this.form.invalid) return;
-
+  
     this.salvando = true;
-
+  
     const dados: Consultor = {
       id: this.consultorId || 0,
-      ...this.form.value
+      ...this.form.getRawValue()
     };
-
+  
     const operacao = this.editando
-      ? this.consultoresService.editar(dados)
+      ? this.consultoresService.editar(this.consultorId, dados)
       : this.consultoresService.adicionar(dados);
-
+  
     operacao.subscribe({
       next: () => {
         this.salvando = false;
-        setTimeout(() => this.router.navigate(['/consultores']), 100);
+        this.router.navigate(['/consultores']);
       },
       error: () => {
         this.salvando = false;
       }
     });
   }
-
+  
   cancelar() {
     this.router.navigate(['/consultores']);
   }
